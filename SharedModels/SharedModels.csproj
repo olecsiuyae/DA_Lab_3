@@ -1,0 +1,29 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\ticket.proto" />
+    <None Remove="Protos\reservation.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Google.Protobuf" Version="3.22.0" />
+    <PackageReference Include="Grpc.AspNetCore" Version="2.53.0" />
+    <PackageReference Include="Grpc.Net.Client" Version="2.53.0" />
+    <PackageReference Include="Grpc.Tools" Version="2.54.0">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Protobuf Include="Protos\ticket.proto" GrpcServices="Both" />
+    <Protobuf Include="Protos\reservation.proto" GrpcServices="Both" />
+  </ItemGroup>
+
+</Project>

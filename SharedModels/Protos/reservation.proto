@@ -1,0 +1,82 @@
+syntax = "proto3";
+
+option csharp_namespace = "ReservationService.Protos";
+
+package reservation;
+
+service ReservationManager {
+  // Create a new reservation
+  rpc CreateReservation (CreateReservationRequest) returns (ReservationResponse);
+  
+  // Get reservation by ID
+  rpc GetReservation (GetReservationRequest) returns (ReservationDetails);
+  
+  // Get all reservations for a customer
+  rpc GetCustomerReservations (GetCustomerReservationsRequest) returns (CustomerReservationsResponse);
+  
+  // Cancel a reservation
+  rpc CancelReservation (CancelReservationRequest) returns (CancelReservationResponse);
+  
+  // Confirm payment for a reservation
+  rpc ConfirmPayment (ConfirmPaymentRequest) returns (ConfirmPaymentResponse);
+}
+
+message CreateReservationRequest {
+  string customer_id = 1;
+  string customer_name = 2;
+  string customer_email = 3;
+  string ticket_id = 4;
+}
+
+message ReservationResponse {
+  bool success = 1;
+  string message = 2;
+  string reservation_id = 3;
+  ReservationDetails reservation = 4;
+}
+
+message GetReservationRequest {
+  string reservation_id = 1;
+}
+
+message ReservationDetails {
+  string reservation_id = 1;
+  string customer_id = 2;
+  string customer_name = 3;
+  string customer_email = 4;
+  string ticket_id = 5;
+  string event_name = 6;
+  string event_date = 7;
+  string venue = 8;
+  double price = 9;
+  string status = 10; // "Reserved", "Paid", "Cancelled"
+  string created_at = 11;
+}
+
+message GetCustomerReservationsRequest {
+  string customer_id = 1;
+}
+
+message CustomerReservationsResponse {
+  repeated ReservationDetails reservations = 1;
+}
+
+message CancelReservationRequest {
+  string reservation_id = 1;
+}
+
+message CancelReservationResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ConfirmPaymentRequest {
+  string reservation_id = 1;
+  string payment_method = 2;
+  string payment_id = 3;
+}
+
+message ConfirmPaymentResponse {
+  bool success = 1;
+  string message = 2;
+} 

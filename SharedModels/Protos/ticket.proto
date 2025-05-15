@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+option csharp_namespace = "TicketService.Protos";
+
+package ticket;
+
+service TicketManager {
+  // Get all available tickets
+  rpc GetAllTickets (GetAllTicketsRequest) returns (GetAllTicketsResponse);
+  
+  // Get ticket details by ID
+  rpc GetTicketById (GetTicketByIdRequest) returns (TicketDetails);
+  
+  // Check ticket availability
+  rpc CheckAvailability (CheckAvailabilityRequest) returns (CheckAvailabilityResponse);
+  
+  // Reserve a ticket (called by the Reservation Service)
+  rpc ReserveTicket (ReserveTicketRequest) returns (ReserveTicketResponse);
+  
+  // Release a reservation (if customer cancels)
+  rpc ReleaseTicket (ReleaseTicketRequest) returns (ReleaseTicketResponse);
+}
+
+message GetAllTicketsRequest {
+}
+
+message GetAllTicketsResponse {
+  repeated TicketInfo tickets = 1;
+}
+
+message TicketInfo {
+  string ticket_id = 1;
+  string event_name = 2;
+  string event_date = 3;
+  string venue = 4;
+  double price = 5;
+  bool is_available = 6;
+}
+
+message GetTicketByIdRequest {
+  string ticket_id = 1;
+}
+
+message TicketDetails {
+  string ticket_id = 1;
+  string event_name = 2;
+  string event_date = 3;
+  string venue = 4;
+  double price = 5;
+  bool is_available = 6;
+  string section = 7;
+  string row = 8;
+  string seat = 9;
+}
+
+message CheckAvailabilityRequest {
+  string ticket_id = 1;
+}
+
+message CheckAvailabilityResponse {
+  bool is_available = 1;
+}
+
+message ReserveTicketRequest {
+  string ticket_id = 1;
+  string reservation_id = 2;
+  string customer_id = 3;
+}
+
+message ReserveTicketResponse {
+  bool success = 1;
+  string message = 2;
+}
+
+message ReleaseTicketRequest {
+  string ticket_id = 1;
+  string reservation_id = 2;
+}
+
+message ReleaseTicketResponse {
+  bool success = 1;
+  string message = 2;
+} 
